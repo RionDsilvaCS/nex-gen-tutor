@@ -11,7 +11,7 @@ import json
 import os
 
 from schema import ChatResponse, ChatStruct, DocResponse, CreateDB, PredictionResponse, UserStruct
-from utils import stream_response, image_emotion
+from utils import stream_response, image_emotion, generate_qa_from_img
 from create_vdb import create_db
 
 load_dotenv()
@@ -103,7 +103,7 @@ async def emotion_recognition(file: UploadFile) -> PredictionResponse:
 # <----------------------------------------------------------------------->
 
 @app.post("/chat-doc")
-async def chat_sample(chat: ChatStruct) -> ChatResponse:
+async def chat_doc(chat: ChatStruct) -> ChatResponse:
 
     start = time.time()
     
@@ -120,10 +120,32 @@ async def chat_sample(chat: ChatStruct) -> ChatResponse:
 
     return ChatResponse(message=str(response), time=inf_time)
 
+
+@app.post("/chat-image")
+async def chat_image(file: UploadFile):
+
+    start = time.time()
+
+    file_content = await file.read()
+    file_location = f'./data/{file.filename}'
+
+    with open(file_location, "wb") as f: 
+        f.write(file_content)
+
+    list_of_qa = generate_qa_from_img(file_location)
+
+    inf_time = float(time.time() - start)
+
+    os.remove(file_location)
+
+    response = { 'cards': list_of_qa}
+
+    return response
+
 # <----------------------------------------------------------------------->
 
 @app.get("/get-card")
-async def chat_sample():
+async def get_card():
 
     with open(USER_DATA, 'r') as file:
         db = json.load(file)
@@ -131,7 +153,7 @@ async def chat_sample():
     return db
 
 @app.post("/create-card")
-async def chat_sample(user_info: UserStruct):
+async def create_card(user_info: UserStruct):
 
     with open(USER_DATA, 'r') as file:
         db = json.load(file)
