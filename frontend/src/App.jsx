@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from "./pages/Home/Home"
 import Chat from "./components/ChatApp/ChatApp"
 import Model from "./react3/model"
-import Model2 from "./react3-model2/model"
+import DocUploadViewer from './components/Document/Document';
 
 
 export const ChatContext = createContext();
@@ -43,9 +43,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/chat/:subject" element={<Model />} />
-            <Route path="/chat" element={<Chat subject="physics" />} />
-            <Route path="/chemistry" element={<Chat subject="chemistry" />} />
-            <Route path="/biology" element={<Chat subject="biology" />} />
+            <Route path="/document" element={<DocUploadViewer/>} />
           </Routes>
         </div>
       </Router>
