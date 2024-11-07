@@ -1,0 +1,110 @@
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(10%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Base styles */
+.page-container {
+  min-height: 100vh;
+  background: white;
+  font-family: var(--rethink);
+}
+
+.main{
+  margin: 7.5vh 4vw;
+}
+
+.header {
+  padding: 3vh 4vw;
+  background-color: #282828;
+}
+
+.logo {
+  font-weight: bold;
+  margin: 0;
+  background: #FFFFFF;
+  width: 198px;
+  background: radial-gradient(circle farthest-corner at center center, #b5c5fc 0%, #2563EB 100%);
+  background-clip: text;
+  color: transparent;
+}
+
+
+.main-heading {
+  font-size: 30px;
+  font-weight: bold;
+  animation: fadeIn 1s ease-out;
+  margin-bottom: 3.5vh;
+}
+
+.sub-heading {
+  color: #475569;
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 0;
+  animation: fadeIn 1.2s ease-out;
+}
+
+/* Cards Grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3vw;
+  padding: 2vh;
+  margin-top: 2vh;
+}
+
+
+
+/* Create New Button */
+.create-button {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: linear-gradient(270deg, #bbcefc, #2563eb);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  transition: all 0.3s ease;
+  animation: slideIn 0.5s ease-out;
+  font-weight: 500;
+  display: flex;
+  font-family: var(--rethink);
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.create-button:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}

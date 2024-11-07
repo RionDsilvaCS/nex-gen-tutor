@@ -1,0 +1,24 @@
+.webcam-container{
+    position: absolute;
+    bottom: 2vh;
+    left: 2vh;
+    z-index: 100;
+}
+.webcam-video{
+    border-radius: 7px;
+    border: 2px solid rgb(143, 201, 248);
+}
+
+.webcam-text{
+    background-color: white;
+    border-radius: 4px;
+    width: 16rem;
+    padding: 5px 5px 20px 5px;
+    position: relative;
+}
+.webcam-time{
+    font-size: 10px;
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+}

@@ -1,0 +1,51 @@
+.body{
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(70deg, #ccd3ff, #ebebeb);
+    max-height: 100vh;
+}
+.left{
+    flex: 1;
+    position: relative;
+}   
+.right{
+    flex: 1;
+}
+
+.camera {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    position: absolute;
+    width: 50vw;
+    top: 50vh;
+    gap: 16px; /* This is 4 rems in tailwind equivalent */
+  }
+  
+  .camera-button {
+    cursor: pointer;
+    background: #ffffff;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    border: none;
+    align-items: center;
+    border-radius: 50%; 
+    transition: background-color 0.3s ease;
+  }
+  
+  .camera-button:hover {
+    background: linear-gradient(70deg, #6277fe, #ebebeb); /* Blue-600 in Tailwind */
+  }
+  
+  .camera-button img {
+    width: 24px;
+    height: 24px;
+  }
+  @media screen and (max-width: 1200px) {
+    .left {
+      width: 10vw;
+    }
+  }

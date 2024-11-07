@@ -1,0 +1,41 @@
+{
+    "subjects": [
+      {
+        "id": 1,
+        "title": "Bacteria multiplication",
+        "description": "Bacteria multiplication in biology, it describes the spread of bacteria and how it multiplies",
+        "category": "Biology",
+        "link": "/biology"
+      },
+      {
+        "id": 2,
+        "title": "Chemical Bonding",
+        "description": "Understanding different types of chemical bonds and their formation",
+        "category": "Chemistry",
+        "link": "/chemistry"
+      },
+      {
+        "id": 3,
+        "title": "Newton's Laws",
+        "description": "Detailed explanation of Newton's three laws of motion",
+        "category": "Physics",
+        "link": "/physics"
+      },
+      {
+        "id": 4,
+        "title": "Newton's Laws",
+        "description": "Detailed explanation of Newton's three laws of motion",
+        "category": "Physics",
+        "link": "/physics"
+      }
+    ],
+    "categories": [
+      "Biology",
+      "Chemistry",
+      "Physics",
+      "Maths",
+      "Literature",
+      "Code"
+    ]
+  }
+  
