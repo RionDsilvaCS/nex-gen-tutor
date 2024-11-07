@@ -2,20 +2,22 @@ from fastapi import FastAPI, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from sse_starlette import EventSourceResponse
 from llama_index.llms.ollama import Ollama
-import time
+from llama_deploy import LlamaDeployClient, ControlPlaneConfig
 from llama_index.llms.gemini import Gemini
+import time
 from dotenv import load_dotenv
 import base64
 import json
 import os
 
-from schema import ChatResponse, ChatStruct, DocResponse, CreateDB, PredictionResponse
+from schema import ChatResponse, ChatStruct, DocResponse, CreateDB, PredictionResponse, UserStruct
 from utils import stream_response, image_emotion
-
-from llama_deploy import LlamaDeployClient, ControlPlaneConfig
+from create_vdb import create_db
 
 load_dotenv()
 # fastapi run app.py --port 8005
+
+USER_DATA = "/home/rion/agents/nex-gen-tutor/backend/db/user.json"
 
 client = LlamaDeployClient(ControlPlaneConfig())
 
@@ -78,6 +80,8 @@ async def create_database(db_info : CreateDB) -> DocResponse:
 
     start = time.time()
 
+    create_db(db_name=db_info.db_name, collection_name=db_info.collection_name)
+
     inf_time = float(time.time() - start)
 
     return DocResponse(doc_id=db_info.collection_name, time=inf_time)
@@ -107,18 +111,42 @@ async def chat_sample(chat: ChatStruct) -> ChatResponse:
 
     session = client.get_or_create_session(session_id=session_id)
 
-    response = session.run("sample_workflow", query=chat.query)
+    if chat.collection_name == "tenth":
+        response = session.run("rag_workflow", query=chat.query, db_name=chat.db_name, collection_name=chat.collection_name)
+    else:
+        response = session.run("sample_workflow", query=chat.query)
 
     inf_time = float(time.time() - start)
 
     return ChatResponse(message=str(response), time=inf_time)
 
+# <----------------------------------------------------------------------->
 
-    # file_content = await file.read()
-    # file_location = f'./img/{file.filename}'
+@app.get("/get-card")
+async def chat_sample():
 
-    # with open(file_location, "wb") as f: 
-    #     f.write(file_content)
+    with open(USER_DATA, 'r') as file:
+        db = json.load(file)
 
-    # with open(file_location, "rb") as image:
-    #     image_string = base64.b64encode(image.read()).decode("utf-8")
+    return db
+
+@app.post("/create-card")
+async def chat_sample(user_info: UserStruct):
+
+    with open(USER_DATA, 'r') as file:
+        db = json.load(file)
+
+    data = {
+            "id": user_info.id,
+            "title": user_info.title,
+            "description": user_info.description,
+            "category": user_info.category,
+            "link": user_info.link
+        }
+    
+    db["cards"].append(data)
+
+    with open(USER_DATA, 'w') as outfile:
+        json.dump(db, outfile, indent=4) 
+
+    return db

@@ -1,6 +1,13 @@
 from datetime import date
 from pydantic import BaseModel
 
+class UserStruct(BaseModel):
+    id : int
+    title : str
+    description : str
+    category : str
+    link : str
+    
 class ChatStruct(BaseModel):
     query : str
     db_name : str | None = None
